@@ -5,6 +5,7 @@ import Hoc from "./hoc/hoc";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import Profile from "./containers/Profile";
+
 const BaseRouter = () => (
   <Hoc>
     <Route exact path="/login/" component={Login} />
