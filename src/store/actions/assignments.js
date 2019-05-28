@@ -7,10 +7,10 @@ export const getASNTListStart = () => {
   };
 };
 
-export const getASNTListSuccess = user => {
+export const getASNTListSuccess = assignments => {
   return {
     type: actionTypes.GET_ASSIGNMENT_LIST_SUCCESS,
-    user
+    assignments
   };
 };
 
@@ -36,6 +36,46 @@ export const getASNTS = token => {
       })
       .catch(err => {
         dispatch(getASNTListFail());
+      });
+  };
+};
+
+const getASNTDetailStart = () => {
+  return {
+    type: actionTypes.GET_ASSIGNMENT_DETAIL_START
+  };
+};
+
+const getASNTDetailSuccess = assignment => {
+  return {
+    type: actionTypes.GET_ASSIGNMENT_DETAIL_SUCCESS,
+    assignment
+  };
+};
+
+const getASNTDetailFail = error => {
+  return {
+    type: actionTypes.GET_ASSIGNMENT_DETAIL_FAIL,
+    error: error
+  };
+};
+
+export const getASNTSDetail = (token, id) => {
+  return dispatch => {
+    dispatch(getASNTDetailStart());
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`
+    };
+    axios
+      .get(`http://127.0.0.1:8000/assignments/${id}/`)
+      .then(res => {
+        const assignment = res.data;
+        console.log(assignment);
+        dispatch(getASNTDetailSuccess(assignment));
+      })
+      .catch(err => {
+        dispatch(getASNTDetailFail());
       });
   };
 };
